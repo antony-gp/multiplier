@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import { SEQUELIZE } from '../constants.class';
 import { Categorias } from './entities/categorias/categorias.entity';
+import { Estoque } from './entities/estoque/estoque.entity';
 
 export const databaseProviders = [
   {
@@ -10,6 +11,7 @@ export const databaseProviders = [
         dialect: 'mysql',
         define: {
             timestamps: false,
+            freezeTableName: true
         },
         host: 'localhost',
         port: 3306,
@@ -17,7 +19,7 @@ export const databaseProviders = [
         password: '1234',
         database: 'multiplier_api',
       });
-      sequelize.addModels([Categorias]);
+      sequelize.addModels([Categorias, Estoque]);
       await sequelize.sync();
       return sequelize;
     },

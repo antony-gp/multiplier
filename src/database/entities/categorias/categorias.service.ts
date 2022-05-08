@@ -34,7 +34,7 @@ export class CategoriasService {
 
       if(error === SEQUELIZE_DB_ERROR_MESSAGE || error === SEQUELIZE_VALIDATION_ERROR_MESSAGE )
         SequelizeHelper.throwHttpError(HttpErrors.POST_VALIDATION_ERROR);
-      SequelizeHelper.throwHttpError(HttpErrors.DEFAULT)
+      SequelizeHelper.throwHttpError();
     }
   }
 
@@ -48,7 +48,7 @@ export class CategoriasService {
       status: newItem.status !== undefined ? newItem.status : currentItem.status,
     } as Categorias;
 
-    this.categoriasRepository.update(updatedItem, this.whereIdEquals(id))
+    this.categoriasRepository.update(updatedItem, this.whereIdEquals(id));
 
     return updatedItem;
   }
@@ -58,11 +58,7 @@ export class CategoriasService {
       try{
         await this.categoriasRepository.destroy(this.whereIdEquals(id));
         return SequelizeHelper.messageWithId(DELETE_MESSAGE, id);
-      } catch(err) {
-        if(err.name == SEQUELIZE_FK_ERROR_MESSAGE)
-          SequelizeHelper.throwHttpError(HttpErrors.DELETE_FK_ERROR, id);
-        SequelizeHelper.throwHttpError(HttpErrors.DEFAULT)
-      }
+      } catch { SequelizeHelper.throwHttpError(); }
     }
   }
 
