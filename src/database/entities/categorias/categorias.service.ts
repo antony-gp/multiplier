@@ -1,13 +1,13 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Op } from 'sequelize';
-import { CATEGORIES_REPOSITORY, DELETE_MESSAGE, SEQUELIZE_FK_ERROR_MESSAGE, SEQUELIZE_DB_ERROR_MESSAGE, SEQUELIZE_VALIDATION_ERROR_MESSAGE } from 'src/constants.class';
+import { CATEGORIAS_REPOSITORY, DELETE_MESSAGE, SEQUELIZE_FK_ERROR_MESSAGE, SEQUELIZE_DB_ERROR_MESSAGE, SEQUELIZE_VALIDATION_ERROR_MESSAGE } from 'src/constants.class';
 import { HttpErrors, SequelizeHelper } from 'src/database/sequelize-helper/sequelizeHelper.class';
 import { Categorias } from './categorias.entity';
 
 @Injectable()
 export class CategoriasService {
   constructor(
-    @Inject(CATEGORIES_REPOSITORY)
+    @Inject(CATEGORIAS_REPOSITORY)
     private categoriasRepository: typeof Categorias
   ) {}
 
@@ -48,7 +48,7 @@ export class CategoriasService {
       status: newItem.status !== undefined ? newItem.status : currentItem.status,
     } as Categorias;
 
-    this.categoriasRepository.update(updatedItem, this.whereIdEquals(id));
+    await this.categoriasRepository.update(updatedItem, this.whereIdEquals(id));
 
     return updatedItem;
   }

@@ -31,11 +31,11 @@ export class EstoqueService {
       return await this.estoqueRepository.create({ ...object });
     } catch (err) {
       const error = err.name;
-      console.log(error)
+      
       if(error === SEQUELIZE_DB_ERROR_MESSAGE || error === SEQUELIZE_VALIDATION_ERROR_MESSAGE )
         SequelizeHelper.throwHttpError(HttpErrors.POST_VALIDATION_ERROR);
       if(error === SEQUELIZE_UNIQUE_ERROR_MESSAGE )
-        SequelizeHelper.throwHttpError(HttpErrors.POST_UNIQUE_PRODUCT_ID_ERROR, object.idProduto);
+        SequelizeHelper.throwHttpError(HttpErrors.POST_UPDATE_UNIQUE_PRODUCT_ID_ERROR, object.idProduto);
       if(error === SEQUELIZE_FK_ERROR_MESSAGE )
         SequelizeHelper.throwHttpError(HttpErrors.POST_FK_ERROR, object.idProduto, 'Produto');
       SequelizeHelper.throwHttpError();
@@ -53,7 +53,20 @@ export class EstoqueService {
       status: newItem.status !== undefined ? newItem.status : currentItem.status,
     } as Estoque;
 
-    this.estoqueRepository.update(updatedItem, this.whereIdEquals(id));
+    try{
+      await this.estoqueRepository.update(updatedItem, this.whereIdEquals(id));
+      return updatedItem;
+    } catch(err) {
+      const error = err.name;
+      
+      if(error === SEQUELIZE_DB_ERROR_MESSAGE)
+        SequelizeHelper.throwHttpError(HttpErrors.UPDATE_VALIDATION_ERROR);
+      if(error === SEQUELIZE_UNIQUE_ERROR_MESSAGE)
+        SequelizeHelper.throwHttpError(HttpErrors.POST_UPDATE_UNIQUE_PRODUCT_ID_ERROR, newItem.idProduto);
+      if(error === SEQUELIZE_FK_ERROR_MESSAGE)
+        SequelizeHelper.throwHttpError(HttpErrors.UPDATE_FK_ERROR, newItem.idProduto, 'Produto');
+      SequelizeHelper.throwHttpError();
+    }
 
     return updatedItem;
   }

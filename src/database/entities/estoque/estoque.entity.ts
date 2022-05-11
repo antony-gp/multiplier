@@ -1,4 +1,5 @@
 import { Table, Column, Model, PrimaryKey, AllowNull, DataType, AutoIncrement, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import { Produtos } from '../produtos/produtos.entity';
 
 @Table
 export class Estoque extends Model {
@@ -8,7 +9,7 @@ export class Estoque extends Model {
   id: number;
 
   @AllowNull(false)
-  //@ForeignKey(() => Produtos)
+  @ForeignKey(() => Produtos)
   @Column(DataType.INTEGER)
   idProduto: number;
 
@@ -24,6 +25,6 @@ export class Estoque extends Model {
   @Column(DataType.INTEGER)
   status: number;
 
-  // @BelongsTo(() => Produto)
-  // produto: Produto;
+  @BelongsTo(() => Produtos)
+  produto: Produtos;
 }

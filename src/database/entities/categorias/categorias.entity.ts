@@ -1,4 +1,5 @@
-import { Table, Column, Model, PrimaryKey, AllowNull, DataType, AutoIncrement } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, AllowNull, DataType, AutoIncrement, HasMany } from 'sequelize-typescript';
+import { Produtos } from '../produtos/produtos.entity';
 
 @Table
 export class Categorias extends Model {
@@ -18,4 +19,9 @@ export class Categorias extends Model {
   @AllowNull(false)
   @Column(DataType.INTEGER)
   status: number;
+
+  @HasMany(() => Produtos, {
+    onDelete: "SET NULL"
+  })
+  produtos: Produtos[];
 }

@@ -13,13 +13,13 @@ create table if not exists Categorias(
 );
 
 create table if not exists Produtos(
-	id int primary key auto_increment,	# Chave primária da tabela
-    idCategoria int,					# id da Categoria (fk)
-    codigo varchar(255) not null,		# SKU do Produto
-    nome varchar(255) not null,			# Nome do Produto
-	descricao text not null,			# Descrição do Produto
-	valor decimal(9,2) not null,		# Valor do Produto
-    status int not null,				# 0 - Inativo, 1 - Ativo
+	id int primary key auto_increment,							# Chave primária da tabela
+    idCategoria int,											# id da Categoria (fk)
+    codigo varchar(255) not null check(LENGTH(codigo) > 0),		# SKU do Produto
+    nome varchar(255) not null,									# Nome do Produto
+	descricao text not null,									# Descrição do Produto
+	valor decimal(9,2) not null,								# Valor do Produto
+    status int not null,										# 0 - Inativo, 1 - Ativo
     foreign key (idCategoria) references Categorias(id) on delete set null
 );
 
