@@ -11,50 +11,28 @@ export class EstoqueService {
     private estoqueRepository: typeof Estoque
   ) {}
 
-  async findAll(): Promise<Estoque[]> {
-    return this.estoqueRepository.findAll<Estoque>();
-  }
+  async findByProductId(id: number): Promise<Estoque> {
+    const estoque = await this.estoqueRepository.findOne(this.whereProductIdEquals(id));
 
-  async findByPk(id: number): Promise<Estoque> {
-    const category = await this.estoqueRepository.findByPk(id);
-
-    if(!category)
+    if(!estoque)
       SequelizeHelper.throwHttpError(HttpErrors.GET_NOT_FOUND, id);
     
-    return category;
-  }
-
-  async create(object: Estoque) {
-    object.id = undefined;
-
-    try{
-      return await this.estoqueRepository.create({ ...object });
-    } catch (err) {
-      const error = err.name;
-      
-      if(error === SEQUELIZE_DB_ERROR_MESSAGE || error === SEQUELIZE_VALIDATION_ERROR_MESSAGE )
-        SequelizeHelper.throwHttpError(HttpErrors.POST_VALIDATION_ERROR);
-      if(error === SEQUELIZE_UNIQUE_ERROR_MESSAGE )
-        SequelizeHelper.throwHttpError(HttpErrors.POST_UPDATE_UNIQUE_PRODUCT_ID_ERROR, object.idProduto);
-      if(error === SEQUELIZE_FK_ERROR_MESSAGE )
-        SequelizeHelper.throwHttpError(HttpErrors.POST_FK_ERROR, object.idProduto, 'Produto');
-      SequelizeHelper.throwHttpError();
-    }
+    return estoque;
   }
 
   async edit(id: number, newItem: Estoque) {
-    const currentItem = await this.findByPk(id);
+    const currentItem = await this.findByProductId(id);
 
     const updatedItem = {
-      id: id,
-      idProduto: newItem.idProduto !== undefined ? newItem.idProduto : currentItem.idProduto,
+      id: currentItem.id,
+      idProduto: currentItem.idProduto,
       quantidade: newItem.quantidade !== undefined ? newItem.quantidade : currentItem.quantidade,
       reserva: newItem.reserva !== undefined ? newItem.reserva : currentItem.reserva,
       status: newItem.status !== undefined ? newItem.status : currentItem.status,
     } as Estoque;
 
     try{
-      await this.estoqueRepository.update(updatedItem, this.whereIdEquals(id));
+      await this.estoqueRepository.update(updatedItem, this.whereProductIdEquals(id));
       return updatedItem;
     } catch(err) {
       const error = err.name;
@@ -75,7 +53,7 @@ export class EstoqueService {
     return SequelizeHelper.throwHttpError(HttpErrors.DELETE_STOCK_NOT_IMPLEMENTED);
   }
 
-  private whereIdEquals(id: number) {
-    return { where: { id: { [Op.eq]: id }}};
+  private whereProductIdEquals(id: number) {
+    return { where: { idProduto: { [Op.eq]: id }}};
   }
 }

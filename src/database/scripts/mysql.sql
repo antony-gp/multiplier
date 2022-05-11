@@ -32,6 +32,18 @@ create table if not exists Estoque(
     foreign key (idProduto) references Produtos(id) on delete cascade
 );
 
+delimiter $$
+
+drop trigger if exists after_product_insert$$
+create trigger after_product_insert
+after insert
+on Produtos for each row
+begin
+    insert into Estoque (idProduto, quantidade, reserva, status) values (new.id, 0, 0, 0);
+end$$
+
+delimiter ;
+
 -- DATABASE SETUP END --
 
 -- INSERT QUERIES START --
