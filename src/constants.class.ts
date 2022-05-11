@@ -1,0 +1,16 @@
+export const SEQUELIZE = 'SEQUELIZE';
+export const CATEGORIAS_REPOSITORY = 'CATEGORIAS_REPOSITORY';
+export const PRODUTOS_REPOSITORY = 'ESTOQUE_REPOSITORY';
+export const ESTOQUE_REPOSITORY = 'ESTOQUE_REPOSITORY';
+export const DELETE_MESSAGE = "Item com id '?id' removido com sucesso";
+export const GET_NOT_FOUND_MESSAGE = "Item com id '?id' não encontrado";
+export const SEQUELIZE_FK_ERROR_MESSAGE = "SequelizeForeignKeyConstraintError";
+export const SEQUELIZE_UNIQUE_ERROR_MESSAGE = "SequelizeUniqueConstraintError";
+export const SEQUELIZE_VALIDATION_ERROR_MESSAGE = "SequelizeValidationError";
+export const SEQUELIZE_DB_ERROR_MESSAGE = "SequelizeDatabaseError";
+export const POST_FK_ERROR_MESSAGE = "?item com id '?id' não existe. Não foi possível criar";
+export const UPDATE_FK_ERROR_MESSAGE = "?item com id '?id' não existe. Não foi possível atualizar";
+export const UPDATE_VALIDATION_ERROR_MESSAGE = "Item possui valor(es) incorreto(s). Não foi possível atualizar";
+export const POST_VALIDATION_ERROR_MESSAGE = "Item com campos/valores incorretos ou faltantes. Não foi possível criar";
+export const UNIQUE_PRODUCT_ID_ERROR = "Produto com id '?id' já possui vínculo a um estoque. Não foi possível criar";
+export const DELETE_STOCK_NOT_IMPLEMENTED_MESSAGE = "Não há como remover apenas o estoque de um produto. Não foi possível remover";
