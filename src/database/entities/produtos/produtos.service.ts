@@ -16,12 +16,12 @@ export class ProdutosService {
   }
 
   async findByPk(id: number): Promise<Produtos> {
-    const category = await this.produtosRepository.findByPk(id);
+    const product = await this.produtosRepository.findByPk(id);
 
-    if(!category)
+    if(!product)
       SequelizeHelper.throwHttpError(HttpErrors.GET_NOT_FOUND, id);
     
-    return category;
+    return product;
   }
 
   async create(object: Produtos) {
