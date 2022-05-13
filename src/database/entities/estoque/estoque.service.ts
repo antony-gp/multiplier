@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Op } from 'sequelize';
-import { ESTOQUE_REPOSITORY, SEQUELIZE_DB_ERROR_MESSAGE, SEQUELIZE_FK_ERROR_MESSAGE, SEQUELIZE_UNIQUE_ERROR_MESSAGE, SEQUELIZE_VALIDATION_ERROR_MESSAGE } from 'src/constants.class';
+import { ESTOQUE_REPOSITORY, SEQUELIZE_DB_ERROR_MESSAGE, SEQUELIZE_FK_ERROR_MESSAGE, SEQUELIZE_UNIQUE_ERROR_MESSAGE } from 'src/constants.class';
 import { HttpErrors, SequelizeHelper } from 'src/database/sequelize-helper/sequelizeHelper.class';
 import { Estoque } from './estoque.entity';
 
