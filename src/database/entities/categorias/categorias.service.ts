@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Op } from 'sequelize';
-import { CATEGORIAS_REPOSITORY, DELETE_MESSAGE, SEQUELIZE_FK_ERROR_MESSAGE, SEQUELIZE_DB_ERROR_MESSAGE, SEQUELIZE_VALIDATION_ERROR_MESSAGE } from 'src/constants.class';
+import { CATEGORIAS_REPOSITORY, DELETE_MESSAGE, SEQUELIZE_DB_ERROR_MESSAGE, SEQUELIZE_VALIDATION_ERROR_MESSAGE } from 'src/constants.class';
 import { HttpErrors, SequelizeHelper } from 'src/database/sequelize-helper/sequelizeHelper.class';
 import { Categorias } from './categorias.entity';
 
